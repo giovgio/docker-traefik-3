@@ -4,12 +4,13 @@ services:
     container_name: traefik
     restart: unless-stopped
     security_opt:
-      - no-new-privileges:true
+      - no-new-privileges:false
     networks:
       - proxy
     ports:
       - "80:80"
       - "443:443"
+      - "8080:8080"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro # Read-only for security
