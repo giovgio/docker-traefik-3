@@ -2,6 +2,8 @@
 
 This repository provides a production-ready, highly secure **Traefik v3** configuration for Docker. It includes automated Let's Encrypt SSL/TLS, global HTTP-to-HTTPS redirection, and security hardening for the Docker socket.
 
+Did it work? offer me a coffee: https://buymeacoffee.com/theunfollower
+
 
 
 ## 🚀 Features
