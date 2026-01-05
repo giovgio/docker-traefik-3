@@ -1,0 +1,18 @@
+http:
+  middlewares:
+    # Security Headers (Best practice 2026)
+    secure-headers:
+      headers:
+        sslRedirect: true
+        stsSeconds: 31536000
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+        customResponseHeaders:
+          X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex"
+
+    # Basic Auth for Dashboard
+    admin-auth:
+      basicAuth:
+        users:
+          - "${DASHBOARD_AUTH}"

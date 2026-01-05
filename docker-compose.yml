@@ -1,0 +1,33 @@
+services:
+  traefik:
+    image: traefik:v3.1  # Pinning to a stable v3 version
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Read-only for security
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/acme.json:/acme.json
+      - ./traefik/dynamic:/etc/traefik/dynamic:ro
+    environment:
+      - TZ=UTC
+    labels:
+      - "traefik.enable=true"
+      # Dashboard Routing
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${MY_DOMAIN}`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      # Middlewares (Defined in dynamic/middlewares.yml)
+      - "traefik.http.routers.dashboard.middlewares=secure-headers@file,admin-auth@file"
+
+networks:
+  proxy:
+    external: true
