@@ -15,4 +15,4 @@ http:
     admin-auth:
       basicAuth:
         users:
-          - "${DASHBOARD_AUTH}"
+          - "DASHBOARD_AUTH"
