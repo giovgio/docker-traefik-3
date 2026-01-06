@@ -28,34 +28,14 @@ Did it work? offer me a coffee: https://buymeacoffee.com/theunfollower
         └── middlewares.yml # Reusable security/auth rules
 ```
 
-1. Create the Network
-Traefik needs a dedicated network to communicate with other containers.
+## 🚀 Setup
 
-```docker network create proxy```
+1. **Network:** `docker network create proxy`
+2. **Acme.json** `touch traefik/acme.json`
+2. **Permissions:** `chmod 600 traefik/acme.json`
+3. **Env:** Update `ACME_EMAIL` in `.env`.
+4. **Deploy:** `docker compose up -d`
 
-2. Configure Environment Variables
-Create a .env file and update it with your information:
-
-```text 
-
-MY_DOMAIN=yourdomain.com
-ACME_EMAIL=admin@yourdomain.com
-# Generate auth: echo $(htpasswd -nB user) | sed -e s/\\$/\\$\\$/g
-DASHBOARD_AUTH=user:$$2y$$05$$J.S...
-```
-
-3. Set Permissions
-Let's Encrypt requires strict permissions on the certificate storage file:
-
-```text 
-
-touch traefik/acme.json
-chmod 600 traefik/acme.json
-```
-
-4. Deploy
-
-```docker compose up -d```
 
 
 ## 🔒 Security Notes
@@ -67,3 +47,15 @@ chmod 600 traefik/acme.json
 
 ## 📄 License
 This project is open-source and available under the MIT License.
+
+
+## 📦 Exposing Container Publicly
+Add these labels to any app you want to be public:
+
+```yaml
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.myapp.rule=Host(`myapp.com`)"
+  - "traefik.http.routers.myapp.entrypoints=websecure"
+  - "traefik.http.routers.myapp.tls.certresolver=letsencrypt"
+  - "traefik.http.services.myapp.loadbalancer.server.port=80"
