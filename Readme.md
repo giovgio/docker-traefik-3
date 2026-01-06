@@ -46,6 +46,9 @@ Did it work? offer me a coffee: https://buymeacoffee.com/theunfollower
 
 - **HSTS**: The secure-headers middleware is enabled by default in the example above to ensure browsers only connect via HTTPS.
 
+## 📝 TO DO
+- update code so that .env contains DASHBOARD_AUTH and ACME_EMAIL
+
 ## 📄 License
 This project is open-source and available under the MIT License.
 
