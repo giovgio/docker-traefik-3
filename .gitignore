@@ -1,0 +1,7 @@
+.DS_Store
+.env
+
+# Log files
+
+.gemini/
+.gemini/settings.json
