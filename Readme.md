@@ -56,9 +56,29 @@ This project is open-source and available under the MIT License.
 Add these labels to any app you want to be public:
 
 ```yaml
-labels:
-  - "traefik.enable=true"
-  - "traefik.http.routers.myapp.rule=Host(`myapp.com`)"
-  - "traefik.http.routers.myapp.entrypoints=websecure"
-  - "traefik.http.routers.myapp.tls.certresolver=letsencrypt"
-  - "traefik.http.services.myapp.loadbalancer.server.port=80"
+    labels:
+      - "traefik.enable=true"
+      # Tells Traefik which port the container is listening on internally
+      - "traefik.http.services.[myappcontainername].loadbalancer.server.port=3000"
+
+      # --- 1. Insecure Router (HTTP / Port 80) ---
+      # Catches requests on Port 80
+      - "traefik.http.routers.[myappcontainername]-http.rule=Host(`myapp.com`)"
+      - "traefik.http.routers.[myappcontainername]-http.entrypoints=web"
+
+      - "traefik.http.middlewares.[myappcontainername]-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.[myappcontainername]-redirect.redirectscheme.permanent=true"
+      
+      # Apply that unique middleware
+      - "traefik.http.routers.[myappcontainername]-http.middlewares=[myappcontainername]-redirect"
+
+      # --- 2. Secure Router (HTTPS / Port 443) ---
+      # Catches requests on Port 443
+      - "traefik.http.routers.[myappcontainername].rule=Host(`myapp.com`)"
+      - "traefik.http.routers.[myappcontainername].entrypoints=websecure"
+      # Enables TLS and uses Let's Encrypt
+      - "traefik.http.routers.[myappcontainername].tls=true"
+      - "traefik.http.routers.[myappcontainername].tls.certresolver=letsencrypt"
+      # Applies your external security headers middleware
+      - "traefik.http.routers.[myappcontainername].middlewares=secure-headers@file"
+
