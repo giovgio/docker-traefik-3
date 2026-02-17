@@ -86,6 +86,6 @@ Add these labels to any app you want to be public:
 to add more than a url or the www use the following:
 
 ```yaml
-"traefik.http.routers.theunfollowerapp.rule=Host(`website`) || Host(`www.website`)"
+"traefik.http.routers.[myappcontainername].rule=Host(`website`) || Host(`www.website`)"
 
 ```
