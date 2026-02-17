@@ -81,4 +81,11 @@ Add these labels to any app you want to be public:
       - "traefik.http.routers.[myappcontainername].tls.certresolver=letsencrypt"
       # Applies your external security headers middleware
       - "traefik.http.routers.[myappcontainername].middlewares=secure-headers@file"
+```
 
+to add more than a url or the www use the following:
+
+```yaml
+"traefik.http.routers.theunfollowerapp.rule=Host(`website`) || Host(`www.website`)"
+
+```
