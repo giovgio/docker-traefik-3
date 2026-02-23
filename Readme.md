@@ -34,7 +34,7 @@ Did it work? offer me a coffee: https://buymeacoffee.com/theunfollower
 2. **Acme.json** `touch traefik/acme.json`
 3. **Permissions:** `chmod 600 traefik/acme.json`
 4. **Env:** Update `ACME_EMAIL` and `MY_DOMAIN` in `.env`.
-5. **Auth** Using https://www.web2generators.com/apache-tools/htpasswd-generator generate the HTPasswd and update `DASHBOARD_AUTH` in `middlewared.yml`
+5. **Auth** Using https://www.web2generators.com/apache-tools/htpasswd-generator generate the HTPasswd and update `DASHBOARD_AUTH` in `middlewares.yml`
 6. **Deploy:** `docker compose up -d`
 
 

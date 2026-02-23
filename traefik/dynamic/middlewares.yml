@@ -8,9 +8,6 @@ http:
         browserXssFilter: true
         contentTypeNosniff: true
         frameDeny: true
-        customResponseHeaders:
-          X-Robots-Tag: "all"
-
     # Basic Auth for Dashboard
     admin-auth:
       basicAuth:
